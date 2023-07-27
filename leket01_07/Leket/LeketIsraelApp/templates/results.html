@@ -1,0 +1,124 @@
+{% extends "master.html" %}
+
+{% block title %}
+My Tennis Club - List of all members
+{% endblock %}
+
+
+{% block content %}
+
+
+<style>
+     p {
+    color: #F37835;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    font-size: 38px;
+    margin: 0 auto;
+    text-align: center;
+    display: table;
+    vertical-align: middle;
+
+  }
+    </style>
+<br><p >תוצאות חיזוי</p> <br><br>
+<style>
+    h3{
+    font-weight: normal;
+    text-align: right;
+    margin-top: -20px;
+    margin-right: 40px;
+    }
+    </style>
+<h3 dir="rtl">תוצאת האלגוריתם החיזוי עבור טווח התאריכים : {{ start_date}} עד {{ end_date}}</h3>
+
+
+
+<table class="result-table">
+    <thead>
+    <tr>
+        <th>type</th>
+        <th>north</th>
+        <th>center</th>
+        <th>south</th>
+        <th>total</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for row in data %}
+    <tr>
+        <td>{{ row.type }}</td>
+        <td>{{ row.north }}</td>
+        <td>{{ row.center }}</td>
+        <td>{{ row.south }}</td>
+        <td>{{ row.total }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<br><br>
+
+<h3 dir="rtl"><b> ערכי הפרמטרים שהוזנו:</b> <br>שנת שמיטה - {{shmita_year}}, תנאי מזג אוויר - {{weather_conditions}}, כמות משקעים - {{amount_rain}},
+    מגפה - {{epidemic}}, מלחמה - {{war}}
+</h3>
+
+<a href="{% url 'HomePage' %}" class="button">חיזוי חדש</a>
+
+<style>
+body {
+        font-family: Arial, Helvetica, sans-serif;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to bottom, #fff, #D1E6CF);
+}
+.result-table {
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    width: 80%;
+    border-left: 2px solid #000;
+    border-right: 2px solid #000;
+    border-top: 2px solid #000;
+    border-bottom: 2px solid #000;
+
+    margin: 0 auto;
+
+
+}.result-table th, .result-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+.result-table th {
+    background-color: #f2f2f2;
+}
+.button {
+          position: absolute;
+          top: 90%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background-color: #F37835;
+          color: white;
+          padding: 5px 10px;
+          margin: 8px 0;
+          border: 2px solid #1111;
+          width: 100px;
+          box-shadow: 2px 2px 4px #888888; /* add shadow */
+          font-size: 18px;
+          text-align: center;
+          text-decoration: none; /* remove underline */
+
+        }
+</style>
+
+<!--<ul>-->
+<!--    {% for x in mymembers %}-->
+<!--    <li><a href="details/{{ x.id }}">{{ x.firstname }} {{ x.lastname }}</a></li>-->
+<!--    {% endfor %}-->
+<!--</ul>-->
+{% endblock %}
+
+
+
+

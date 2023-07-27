@@ -1,0 +1,280 @@
+{% extends "master.html" %}
+{% load static %}
+{% block content %}
+<div class="hero-image">
+  <div class="hero-text">
+    <h2>מערכת לחיזוי</h2>
+    <h2 style="margin-top:10px">תפוקה חקלאית</h2>
+  </div>
+</div>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+    body {
+        font-family: tahoma, sans-serif;
+        background-image: url('{% static "images/leket6.png" %}'); /* Set the background image */
+        background-size: cover; /* sets the image to cover the entire body */
+}
+
+
+.hero-text {
+  position: absolute;
+  top: 25%;
+  left: 66%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 2; /* Make sure text appears on top of background image */
+  color: #F37835; /* Set text color to white */
+  padding: 10px; /* Add padding to text container */
+}
+
+.hero-text h2 {
+  font-size: 44px;
+  font-weight: bold;
+  margin: 0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 80%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  text-align: right;
+  margin-right: 10%;
+  transform: translateY(20px);
+}
+
+.button {
+  position: absolute;
+  top: 68%;
+  left: 66.3%;
+  transform: translate(-50%, -50%);
+  background-color: #F37835;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: 2px solid #1111;
+  width: 120px;
+  z-index: 2;
+  box-shadow: 2px 2px 4px #888888; /* add shadow */
+  font-size: 20px;
+}
+.hidden {
+  display: none;
+}
+
+
+.login-button {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #F37835;
+  color: white;
+  padding: 5px 200px;
+  margin: 8px 0;
+  border: 2px solid #1111;
+  width: 200px;
+  z-index: 2;
+  box-shadow: 2px 2px 4px #888888; /* add shadow */
+  font-size: 18px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Tahoma;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+<!--/* Extra styles for the cancel button */-->
+<!--.cancelbtn {-->
+  <!--width: auto;-->
+  <!--padding: 5px 18px;-->
+  <!--background-color: #f44336;-->
+  <!--border: 2px solid #1111;-->
+  <!--text-align: left;-->
+  <!--margin-left: 57px;-->
+  <!--box-shadow: 1px 1px 2px #888888; /* add shadow */-->
+<!--}-->
+
+.button-container {
+  text-align: left;
+  line-height: 50px; /* center text vertically */
+  margin-top: 90px; /* adjust the value as needed */
+}
+
+/* Center the image and position the close button */
+.imgcontainer {
+  text-align: center;
+  right: 40%
+  margin: 24px 0 12px 0;
+  position: relative;
+}
+
+.container {
+  direction: rtl; /* set text direction to right-to-left */
+  text-align: right; /* align text to the right */
+}
+
+label {
+  display: inline-block; /* make the labels inline with the input fields */
+  width: 30%; /* set the width of the label */
+  margin-right: 10%; /* add some margin between the label and the input field */
+  text-align: right; /* align the text to the right */
+  transform: translateY(20px);
+}
+
+span.psw {
+  float: right;
+  padding-top: 0px;
+  padding-right: 45px;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-image: url('{% static "images/leket6.png" %}'); /* Set the background image */
+  background-size: cover; /* sets the image to cover the entire body */
+}
+
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  background-color: rgba(255, 255, 255, 0.7); /* white with 50% opacity */
+  margin: 18% auto 10% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  width: 40%; /* Could be more or less, depending on screen size */
+  height: 56%;
+  z-index: 999; /* set a high value to bring it to the front */
+  margin-right: 12%;
+  position: absolute;
+  left: 46%;
+}
+
+
+/* The Close Button (x) */
+.close {
+  position: absolute;
+  right: 5px;
+  top: 0px;
+  color: #000;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: red;
+  cursor: pointer;
+}
+
+/* Add Zoom Animation */
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+  from {-webkit-transform: scale(0)}
+  to {-webkit-transform: scale(1)}
+}
+
+@keyframes animatezoom {
+  from {transform: scale(0)}
+  to {transform: scale(1)}
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  .cancelbtn {
+     width: 100%;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="id01" class="modal">
+
+    <form class="modal-content animate" method="POST"  action="{% url 'login' %}">
+        {% csrf_token %}
+        <div class="imgcontainer">
+            <span class="close" title="Close Modal"><a href="{% url 'main' %}">&times;</a></span>
+        </div>
+
+        <div class="container"><br>
+            <label for="username"><b>שם משתמש</b></label>
+            <input type="text" placeholder="שם משתמש" name="username" id="username" style="font-family: Tahoma;" required>
+
+            <label for="password" style="margin-top:10px;"><b>סיסמה</b></label>
+            <input type="password" placeholder="סיסמה" name="password" id="password" style="font-family: Tahoma;" required>
+
+
+            <button type="submit" class="login-button">התחבר</button>
+
+        </div>
+
+        <div class="button-container" style="background-color:#E2E2E2">
+            <a href="{% url 'password_reset_form' %}" style="display: block; text-align: center; font-family: Tahoma;"class="cancelbtn">שכחתי סיסמה</a>
+        </div>
+    </form>
+</div>
+
+<script>
+// Get the modal
+var modal = document.getElementById('id01');
+
+// When the page loads, show the modal
+window.onload = function() {
+    modal.style.display = "block";
+}
+
+// When the user clicks on the "X" button, close the modal and redirect to the previous page
+var closeBtn = document.getElementsByClassName("close")[0];
+console.log(closeBtn);
+closeBtn.onclick = function() {
+    var url = closeBtn.getAttribute("main");
+    window.location.href = url;
+}
+
+// When the user clicks on the cancel button, close the modal and redirect to the previous page
+var cancelBtn = document.getElementsByClassName("cancelbtn")[0];
+cancelBtn.onclick = function() {
+    window.location.href = "/";
+}
+
+// When the user clicks anywhere outside of the modal, close it and redirect to the previous page
+window.onclick = function(event) {
+    if (event.target == modal) {
+        window.location.href = "/";
+    }
+}
+
+</script>
+
+</body>
+{% endblock %}

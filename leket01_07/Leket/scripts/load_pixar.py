@@ -1,0 +1,86 @@
+
+from LeketIsraelApp.models import leket_DB_24_06
+import csv
+
+
+# def run():
+#     with open('Farmers_hebrew.csv', encoding="utf8") as file:
+#         reader = csv.reader(file)
+#         next(reader)  # Advance past the header
+#
+#         leket_DB.objects.all().delete()
+#
+#         for row in reader:
+#             print(row)
+#
+#             # genre, _ = Genre.objects.get_or_create(name=row[-1])
+#
+#             leket_db = leket_DB(type=row[0],
+#                             area=row[1],
+#                             location=row[2],
+#                             amount_kg=row[3],
+#                             missionID=row[4],
+#                             farmerID=row[5],
+#                             date=row[6])
+#             leket_db.save()
+
+# def run():
+#     with open('output11.csv', encoding="utf-8-sig") as file:
+#         reader = csv.reader(file)
+#         next(reader)  # Advance past the header
+#
+#         leket_DB_new.objects.all().delete()
+#
+#         for row in reader:
+#             print(row)
+#
+#             # genre, _ = Genre.objects.get_or_create(name=row[-1])
+#
+#             leket_db_new = leket_DB_new(group=row[0],
+#                                         type=row[1],
+#                                         area=row[2],
+#                                         leket_location=row[3],
+#                                         sum_amount_kg=row[4],
+#                                         missionID=row[5],
+#                                         date=row[7],
+#                                         napa_name = row[9],
+#                                         aklim_area=row[11],
+#                                         TMY_station=row[12],
+#                                         station=row[14],
+#                                         ground_temp=row[18],
+#                                         shmita=row[19],
+#                                         chagim=row[20])
+#             leket_db_new.save()
+
+
+
+def run():
+    with open('leket_db_24_06.csv', encoding="cp1255") as file:
+        reader = csv.reader(file)
+        next(reader)  # Advance past the header
+
+        leket_DB_24_06.objects.all().delete()
+
+        for row in reader:
+            print(row)
+
+            # genre, _ = Genre.objects.get_or_create(name=row[-1])
+
+            leket_db_new = leket_DB_24_06(group=row[0],
+                                        type=row[1],
+                                        area=row[2],
+                                        leket_location=row[3],
+                                        amount_kg=row[4],
+                                        missionID=row[5],
+                                        farmerID=row[6],
+                                        date=row[7],
+                                        napa_name = row[9],
+                                        aklim_area=row[11],
+                                        TMY_station=row[12],
+                                        station=row[14],
+                                        max_temp = row[16],
+                                        min_temp = row[17],
+                                        ground_temp=row[18],
+                                        shmita=row[19],
+                                        chagim=row[20])
+            leket_db_new.save()

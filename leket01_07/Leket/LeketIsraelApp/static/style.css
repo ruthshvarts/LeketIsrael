@@ -1,0 +1,99 @@
+
+ .grid {
+    border-collapse: collapse;
+    font-family: Tahoma, sans-serif;
+    font-size: 14px;
+    width: 60%;
+    margin: 0 auto;
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+    background-color: rgba(245, 245, 245, 0.5);
+    border-radius: value;
+    margin-left: auto;
+    margin-right: 95px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+  }
+
+  .grid th, .grid td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+        white-space: nowrap;
+  }
+
+    .grid th {
+        background-color: #F6A172;
+        box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+        border-radius: 10px 10px 0 0;
+    }
+
+    .grid tbody tr:hover {
+          background-color: #FBDBC9;
+    }
+
+    .grid th:first-child {
+        border-radius: 10px 0 0 0;
+    }
+
+    .grid th:last-child {
+        border-radius: 0 10px 0 0;
+    }
+
+    .grid td:first-child {
+      text-align: center;
+    }
+
+table thead tr td{
+  background-color : #F6A172;
+  min-width : 100px;
+  position: relative;
+}
+
+.filter{
+  position:absolute;
+  top : 20px;
+  background-color : white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  width:200px;
+  right:0;
+  display:none;
+}
+
+.grid-item {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 5px;
+  align-items: center;
+}
+
+.grid-item input[type="checkbox"] {
+  order: 2;
+  margin-left: 5px;
+}
+
+.grid-item label {
+  order: 1;
+  margin-right: 5px;
+}
+
+.select-all {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+.select-all label {
+  margin-right: 5px;
+  text-align: right;
+}
+
+
+.button {/
+    margin-right: 10px; /* Add margin-right to "אישור" button */
+}
+
+.close-button {
+    margin-left: 10px; /* Add margin-left to ":סגור" text */
+}
+

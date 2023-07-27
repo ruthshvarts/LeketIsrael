@@ -1,0 +1,382 @@
+<!--&lt;!&ndash;python -m http.server 3000&ndash;&gt;-->
+<!--<!DOCTYPE html>-->
+<!--{% load static %}-->
+
+<!--<html>-->
+<!--<head>-->
+    <!--<title>Leket Israel</title>-->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>-->
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />-->
+    <!--<script>-->
+        <!--$(document).ready(function()-->
+        <!--{-->
+            <!--$('#location').select2();-->
+        <!--});-->
+    <!--</script>-->
+
+    <!--<script>-->
+        <!--$(document).ready(function()-->
+        <!--{-->
+            <!--$('#type').select2();-->
+        <!--});-->
+    <!--</script>-->
+
+    <!--<script>-->
+        <!--$(document).ready(function()-->
+        <!--{-->
+            <!--$('#napa_name').select2();-->
+        <!--});-->
+    <!--</script>-->
+
+    <!--<meta charset="UTF-8">-->
+    <!--<style>-->
+        <!--body {-->
+        <!--font-family: Arial, Helvetica, sans-serif;-->
+        <!--height: 100vh;-->
+        <!--margin: 0;-->
+        <!--padding: 0;-->
+        <!--background: linear-gradient(to bottom, #fff, #D1E6CF);-->
+<!--}-->
+    <!--</style>-->
+    <!--<link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />-->
+    <!--<script defer src="https://pyscript.net/latest/pyscript.js"></script>-->
+<!--</head>-->
+<!--<style>"text-align: center"</style>-->
+<!--<div style="position: relative;">-->
+  <!--<a href="{% url 'logout' %}" style="position: absolute; top: 5px; right: 40px; padding: 0px; font-size: 18px;color: #cf510c;">התנתק</a>-->
+<!--</div>-->
+
+<!--<style>-->
+    <!--p{-->
+    <!--color: #F37835;-->
+    <!--font-weight: bold;-->
+    <!--text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);-->
+    <!--font-size: 38px;-->
+    <!--margin-left: 100px;-->
+    <!--}-->
+    <!--</style>-->
+<!--<p style="display: inline-block" dir="rtl">מערכת לחיזוי תפוקה חקלאית</p>-->
+<!--<br>-->
+
+<!--<style>-->
+    <!--h3{-->
+    <!--font-weight: normal;-->
+    <!--text-align: right;-->
+    <!--margin-top: -20px;-->
+    <!--margin-right: 40px;-->
+    <!--}-->
+    <!--</style>-->
+<!--<h3 dir="rtl">מטרת המערכת לעזור למשתמש לחזות כמות תפוקה חקלאית צפויה, בהתאם לנתונים שיוזנו על ידי המשתמש. <br> <strong>אנא מלא את השדות שברצונך להכליל בחיזוי. שים לב שאין חובה למלא את כל השדות וניתן להשאיר שדות ריקים.</strong></h3>-->
+<!--<hr style="border: 0.5px solid #E2E7E1; width: 66%; margin-right: 40px;"><br>-->
+
+
+
+<!--<form action="/check" method="get">-->
+
+    <!--<div dir="rtl" lang="he" style="text-align: right; margin-right: 40px;">-->
+        <!--<label for="start-date"><b>תאריך התחלה:</b></label>-->
+        <!--<input type="date" id="start-date" name="start-date" min="2022-01-01" required>-->
+    <!--</div><br>-->
+
+    <!--<div dir="rtl" lang="he" style="text-align: right; margin-right: 40px;">-->
+        <!--<label for="end-date"><b>תאריך סיום:</b></label>-->
+        <!--<input type="date" id="end-date" name="end-date" min="2022-01-01" required>-->
+    <!--</div><br>-->
+
+
+    <!--<div dir="rtl" lang="he" style="text-align: right; margin-right: 40px;">-->
+        <!--<label for="location" ><b>אזור גיאוגרפי:</b></label>-->
+        <!--<select id="location" name="location" style="display: block;" required>-->
+            <!--<option selected disabled = 'true'></option>-->
+            <!--{% for location in locations %}-->
+                <!--<option value="{{ location }}">{{ location }}</option>-->
+            <!--{% endfor %}-->
+        <!--</select>-->
+    <!--</div><br>-->
+
+    <!--<div dir="rtl" lang="he" style="text-align: right; margin-right: 40px;">-->
+        <!--<label for="type" ><b>סוג תוצרת:</b></label>-->
+        <!--<select id="type" name="type" style="display: block;" required>-->
+            <!--<option selected disabled = 'true'></option>-->
+            <!--{% for t in type %}-->
+                <!--<option value="{{ t }}">{{ t }}</option>-->
+            <!--{% endfor %}-->
+        <!--</select>-->
+    <!--</div><br>-->
+
+    <!--<div dir="rtl" lang="he" style="text-align: right; margin-right: 40px;">-->
+        <!--<label for="napa_name"><b>שם נפה:</b></label>-->
+        <!--<select id="napa_name" name="napa_name" style="display: block;" required>-->
+            <!--<option selected disabled='true'></option>-->
+                <!--{% for n in napa_name %}-->
+                    <!--{% if n == "ירדן )יריחו(" %}-->
+                        <!--<option value="{{ n }}">{{ "ירדן (יריחו)" }}</option>-->
+                    <!--{% else %}-->
+                        <!--<option value="{{ n }}">{{ n }}</option>-->
+                    <!--{% endif %}-->
+                <!--{% endfor %}-->
+        <!--</select>-->
+    <!--</div><br>-->
+
+
+    <!--<div dir="rtl" lang="he" style="text-align: right; margin-right: 40px;">-->
+        <!--<b>האם זו תקופת חגים:</b>-->
+        <!--<input type="radio" name="chag" value="כן" style="margin-right: 10px;" required> כן-->
+        <!--<input type="radio" name="chag" value="לא" style="margin-right: 10px;" required> לא-->
+    <!--</div><br>-->
+
+
+    <!--<button class="button" dir="rtl" lang="he" type="submit">חיזוי</button>-->
+<!--</form>-->
+
+
+<!--<style>-->
+        <!--.button {-->
+          <!--position: absolute;-->
+          <!--top: 90%;-->
+          <!--left: 25%;-->
+          <!--transform: translate(-50%, -50%);-->
+          <!--background-color: #F37835;-->
+          <!--color: white;-->
+          <!--padding: 5px 10px;-->
+          <!--margin: 8px 0;-->
+          <!--border: 2px solid #1111;-->
+          <!--width: 100px;-->
+          <!--box-shadow: 2px 2px 4px #888888; /* add shadow */-->
+          <!--font-size: 18px;-->
+          <!--text-align: center;-->
+          <!--text-decoration: none; /* remove underline */-->
+        <!--}-->
+    <!--</style>-->
+
+<!--<div class="background-image"></div>-->
+
+<!--<style>-->
+    <!--.background-image {-->
+      <!--position: fixed; /* Stay in place */-->
+      <!--z-index: -1; /* Sit on top */-->
+      <!--left: 0px;-->
+      <!--bottom: -20px;-->
+      <!--width: 100%; /* Full width */-->
+      <!--height: 100%; /* Full height */-->
+      <!--overflow: auto; /* Enable scroll if needed */-->
+      <!--background-image: url('{% static "images/leket5.png" %}'); /* Set the background image */-->
+      <!--background-position: left bottom;-->
+      <!--background-size: 400px; /* Set the size of the background image */-->
+      <!--background-repeat: no-repeat; /* Prevent the image from repeating */-->
+      <!--opacity: 0.2; /* Change the opacity to 50% */-->
+<!--&lt;!&ndash;      background-image: url('{% static "images/leket4.png" %}'); /* Set the background image */&ndash;&gt;-->
+    <!--}-->
+<!--</style>-->
+
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+<head>
+    <title>Leket Israel</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script>
+        $(document).ready(function()
+        {
+            $('#location').select2();
+        });
+    </script>
+
+    <script>
+        $(document).ready(function()
+        {
+            $('#type').select2();
+        });
+    </script>
+
+    <script>
+        $(document).ready(function()
+        {
+            $('#napa_name').select2();
+        });
+    </script>
+
+    <meta charset="UTF-8">
+
+    <!--<style>-->
+        <!--body {-->
+        <!--font-family: Arial, Helvetica, sans-serif;-->
+        <!--height: 100vh;-->
+        <!--margin: 0;-->
+        <!--padding: 0;-->
+        <!--background-image: url('{% static "images/leket10.png" %}'); /* Set the background image */-->
+        <!--background-size: cover; /* sets the image to cover the entire body */-->
+
+        <!--&lt;!&ndash;background: linear-gradient(to bottom, #fff, #D1E6CF);&ndash;&gt;-->
+<!--}-->
+    <!--</style>-->
+    <style>
+    body {
+        font-family: tahoma, Helvetica, sans-serif;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        position: relative; /* Make sure the parent element is relatively positioned */
+    }
+
+    body::after {
+        content: "";
+        background-image: url('{% static "images/leket7.png" %}'); /* Set the background image */
+        background-size: cover; /* sets the image to cover the entire body */
+        opacity: 0.68; /* Set the opacity of the background image */
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1; /* Place the pseudo-element behind other content */
+    }
+</style>
+
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+</head>
+<style>"text-align: center"</style>
+<div style="position: relative;">
+  <a href="{% url 'logout' %}" style="position: absolute; top: 5px; right: 40px; padding: 0px; font-size: 18px;color: #cf510c;">התנתק</a><br><br>
+</div>
+
+<style>
+    p{
+    color: #F37835;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    font-size: 30px;
+    margin-left: 50%;
+    }
+    </style>
+<p style="display: inline-block; margin-right: 190px;" dir="rtl">מערכת לחיזוי תפוקה חקלאית</p>
+<br>
+
+<style>
+    h3{
+    font-weight: normal;
+    margin-top: -20px;
+    font-size:16px;
+    }
+    </style>
+<!--<h3 dir="rtl" style="text-align: center;margin-left: 220px">-->
+    <!--<strong>מטרת המערכת לחזות כמות תפוקה חקלאית צפויה, בהתאם לנתונים שיוזנו על ידי המשתמש.</strong></h3>-->
+<!--<hr style="border: 0.5px solid #E2E7E1; width: 66%; margin-right: 40px;text-align: center;"><br>-->
+<h3 dir="rtl" style="margin-right: 190px;">מטרת המערכת לחזות כמות תפוקה חקלאית צפויה, בהתאם לנתונים שיוזנו מראש. </h3>
+<!--<h3 dir="rtl" lang="he" style="margin-top:-1%; margin-right:260px;">-->
+    <!--<strong>לצורך חיזוי מיטבי, אנא הקפד למלא את כלל השדות.</strong></h3>-->
+<hr style="border: 0.3px solid #D1D1D1; width: 60%; margin-right: 40px;">
+<hr style="border: 0.3px solid #D1D1D1; width: 60%; margin-right: 40px;margin-top:-1%"><br>
+
+
+
+
+<form action="/check" method="get">
+
+    <!--<div dir="rtl" lang="he" style="text-align: right; margin-right: 190px;margin-top:10px;">-->
+        <!--<label for="start-date"><b>תאריך התחלה:</b></label>-->
+        <!--<input type="date" id="start-date" name="start-date" min="2022-01-01" style="width: 171.5px;" required class="input-box">-->
+    <!--</div><br>-->
+
+    <div dir="rtl" lang="he" style="text-align: right; margin-right: 190px;">
+        <label for="end-date"><b>תאריך:</b></label>
+        <input type="date" id="end-date" name="end-date" min="2022-01-01"style="width: 195px;" required class="input-box">
+    </div><br>
+
+
+    <div dir="rtl" lang="he" style="text-align: right; margin-right: 190px;">
+        <label for="type" ><b>סוג תוצרת:</b></label>
+        <select id="type" name="type" style="display: block;width: 202.5px;" required class="input-box">
+            <option selected disabled = 'true'></option>
+            {% for t in type %}
+                <option value="{{ t }}">{{ t }}</option>
+            {% endfor %}
+        </select>
+    </div><br>
+
+    <div dir="rtl" lang="he" style="text-align: right; margin-right: 190px;">
+        <label for="napa_name"><b>אזור גיאוגרפי:</b></label>
+        <select id="napa_name" name="napa_name" style="display: block;width: 180px;"required class="input-box">
+            <option selected disabled='true'></option>
+                {% for n in napa_name %}
+                    {% if n == "ירדן )יריחו(" %}
+                        <option value="{{ n }}">{{ "ירדן (יריחו)" }}</option>
+                    {% else %}
+                        <option value="{{ n }}">{{ n }}</option>
+                    {% endif %}
+                {% endfor %}
+        </select>
+    </div><br>
+
+
+    <div dir="rtl" lang="he" style="text-align: right; margin-right: 190px;">
+        <b>האם זו תקופת חגים:</b>
+        <input type="radio" name="chag" value="כן" style="margin-right: 20px;" required class="input-box"> כן
+        <input type="radio" name="chag" value="לא" style="margin-right: 28px;" required class="input-box"> לא
+    </div><br>
+
+
+    <button class="button" dir="rtl" lang="he" type="submit">חיזוי</button>
+</form>
+
+
+<style>
+    .input-box {
+        <!--width: 200px; /* Adjust the width as needed */-->
+        padding: 5px; /* Adjust the padding as needed */
+        border: 1px solid #ccc; /* Add border for visual separation */
+        border-radius: 4px; /* Add border radius for rounded corners */
+        box-sizing: border-box; /* Include padding and border in the total width */
+    }
+</style>
+
+<style>
+        .button {
+          position: absolute;
+          top: 82.5%;
+          right: 40px;
+          transform: translate(-50%, -50%);
+          background-color: #F37835;
+          color: white;
+          padding: 5px 10px;
+          margin: 8px 0;
+          border: 2px solid #1111;
+          width: 295px;
+          box-shadow: 2px 2px 4px #888888; /* add shadow */
+          font-size: 18px;
+          text-align: center;
+          text-decoration: none; /* remove underline */
+        }
+    </style>
+
+<div class="background-image"></div>
+
+<!--<style>-->
+    <!--.background-image {-->
+      <!--position: fixed; /* Stay in place */-->
+      <!--z-index: -1; /* Sit on top */-->
+      <!--bottom: -20px;-->
+      <!--width: 100%; /* Full width */-->
+      <!--height: 100%; /* Full height */-->
+      <!--overflow: auto; /* Enable scroll if needed */-->
+
+
+      <!--background-image: url('{% static "images/leket5.png" %}'); /* Set the background image */-->
+      <!--background-position: left bottom;-->
+      <!--background-size: 400px; /* Set the size of the background image */-->
+      <!--background-repeat: no-repeat; /* Prevent the image from repeating */-->
+      <!--&lt;!&ndash;opacity: 0.2; /* Change the opacity to 50% */&ndash;&gt;-->
+<!--&lt;!&ndash;      background-image: url('{% static "images/leket4.png" %}'); /* Set the background image */&ndash;&gt;-->
+    <!--}-->
+<!--</style>-->
+
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!--{% load static %}-->
+
+<!--{% block content %}-->
+<!--<style>-->
+     <!--p {-->
+    <!--color: #F37835;-->
+    <!--font-weight: bold;-->
+    <!--text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);-->
+    <!--font-size: 38px;-->
+    <!--margin: 0 auto;-->
+    <!--&lt;!&ndash;text-align: right;&ndash;&gt;-->
+    <!--&lt;!&ndash;display: table;&ndash;&gt;-->
+    <!--&lt;!&ndash;display: inline-block; &ndash;&gt;-->
+    <!--margin-right: 40px;-->
+    <!--margin-left: 50%;-->
+  <!--}-->
+    <!--</style>-->
+<!--<br><p>תוצאות חיזוי</p> <br><br>-->
+<!--<style>-->
+    <!--h3{-->
+    <!--font-family: Tahoma, Helvetica, sans-serif;-->
+    <!--font-weight: normal;-->
+    <!--text-align: right;-->
+    <!--margin-top: -20px;-->
+    <!--margin-right: 100px;-->
+    <!--}-->
+    <!--</style>-->
+<!--&lt;!&ndash;<h3 dir="rtl">תוצאת האלגוריתם החיזוי עבור טווח התאריכים : {{ start_date}} עד {{end_date}}</h3>&ndash;&gt;-->
+<!--<h3 dir="rtl">תוצאת אלגוריתם החיזוי עבור התאריך: <b>{{end_date}}</b></h3><br>-->
+
+<!--&lt;!&ndash;<h3 dir="rtl"><b> ערכי הפרמטרים שהוזנו:</b></h3>&ndash;&gt;-->
+<!--<h3 dir="rtl">סוג תוצרת: <b>{{type}}</b>, אזור גיאוגרפי: <b>{{napa_name}}</b>, תקופת חגים: <b>{{chag}}</b>,-->
+    <!--שנת שמיטה: <b>{{shmita_val}}</b>-->
+<!--</h3>-->
+
+<!--<table class="result-table">-->
+  <!--<thead>-->
+    <!--<tr>-->
+      <!--<th>כמות צפויה</th>-->
+      <!--<th>מיקום</th>-->
+   <!--</tr>-->
+ <!--</thead>-->
+ <!--<tbody>-->
+   <!--{% for row in page_obj %}-->
+    <!--<tr>-->
+      <!--<td>{{ row.test_preds }}</td>-->
+      <!--<td>{{ row.leket_location }}</td>-->
+    <!--</tr>-->
+   <!--{% endfor %}-->
+ <!--</tbody>-->
+<!--</table>-->
+
+<!--<nav aria-label="Page navigation example">-->
+  <!--<ul class="pagination">-->
+    <!--{% if page_obj.has_previous %}-->
+        <!--<li class="page-item"><a class="page-link" href="?start-date={{start_date}}&end-date={{end_date}}&type={{type}}&napa_name={{napa_name}}&chag={{chag}}&page=1">&laquo; First</a></li>-->
+        <!--<li class="page-item"><a class="page-link" href="?start-date={{start_date}}&end-date={{end_date}}&type={{type}}&napa_name={{napa_name}}&chag={{chag}}&page={{ page_obj.previous_page_number }}">Previous</a></li>-->
+    <!--{% endif %}-->
+
+      <!--{% for i in nums %}-->
+      <!--<li class="page-item"><a class="page-link" href="?start-date={{start_date}}&end-date={{end_date}}&type={{type}}&napa_name={{napa_name}}&chag={{chag}}&page={{ forloop.counter }}">{{ forloop.counter }}</a></li>-->
+
+      <!--{% endfor %}-->
+
+    <!--{% if page_obj.has_next %}-->
+        <!--<li class="page-item"><a class="page-link" href="?start-date={{start_date}}&end-date={{end_date}}&type={{type}}&napa_name={{napa_name}}&chag={{chag}}&page={{ page_obj.next_page_number }}">Next</a></li>-->
+        <!--<li class="page-item"><a class="page-link" href="?start-date={{start_date}}&end-date={{end_date}}&type={{type}}&napa_name={{napa_name}}&chag={{chag}}&page={{ page_obj.paginator.num_pages }}">Last &raquo;</a></li>-->
+    <!--{% endif %}-->
+  <!--</ul>-->
+<!--</nav>-->
+<!--&lt;!&ndash;<img src="data:image/png;base64,{{ image_base64 }}" alt="image_base64">&ndash;&gt;-->
+
+
+<!--<a href="{% url 'HomePage' %}" class="button">חיזוי חדש</a>-->
+
+<!--<style>-->
+<!--body {-->
+        <!--font-family: Tahoma, Helvetica, sans-serif;-->
+        <!--height: 100vh;-->
+        <!--margin: 0;-->
+        <!--padding: 0;-->
+        <!--background: linear-gradient(to bottom, #fff, #D1E6CF);-->
+<!--}-->
+<!--.result-table {-->
+    <!--border-collapse: collapse;-->
+    <!--font-family: Tahoma, sans-serif;-->
+    <!--font-size: 14px;-->
+    <!--width: 60%;-->
+    <!--margin: 0 auto;-->
+    <!--box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);-->
+    <!--background-color: rgba(245, 245, 245, 0.5);-->
+    <!--border-radius: value;-->
+    <!--margin-left: auto;-->
+    <!--margin-right: 95px;-->
+    <!--border: 1px solid #ddd;-->
+    <!--border-radius: 10px;-->
+<!--}-->
+
+<!--.result-table th, .result-table td {-->
+    <!--border: 1px solid #ddd;-->
+    <!--padding: 8px;-->
+    <!--text-align: center;-->
+    <!--white-space: nowrap;-->
+    <!--overflow: hidden;-->
+    <!--text-overflow: ellipsis;-->
+<!--}-->
+
+<!--.result-table th {-->
+  <!--background-color: #F6A172;-->
+  <!--box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);-->
+  <!--border-radius: 10px 10px 0 0;-->
+<!--}-->
+
+<!--.result-table tbody tr:hover {-->
+    <!--background-color: #FBDBC9;-->
+<!--}-->
+
+<!--.result-table th:first-child {-->
+  <!--border-radius: 10px 0 0 0;-->
+<!--}-->
+
+<!--.result-table th:last-child {-->
+  <!--border-radius: 0 10px 0 0;-->
+<!--}-->
+
+<!--.result-table td:first-child {-->
+    <!--text-align: center;-->
+<!--}-->
+
+<!--.button {-->
+          <!--position: absolute;-->
+          <!--top: 87.5%;-->
+          <!--left: 21.5%;-->
+          <!--transform: translate(-50%, -50%);-->
+          <!--background-color: #F37835;-->
+          <!--color: white;-->
+          <!--padding: 5px 10px;-->
+          <!--margin: 8px 0;-->
+          <!--border: 2px solid #1111;-->
+          <!--width: 100px;-->
+          <!--box-shadow: 2px 2px 4px #888888; /* add shadow */-->
+          <!--font-size: 18px;-->
+          <!--text-align: center;-->
+          <!--text-decoration: none; /* remove underline */-->
+
+        <!--}-->
+<!--</style>-->
+
+<!--<div class="background-image"></div>-->
+<!--<style>-->
+    <!--.background-image {-->
+      <!--position: fixed; /* Stay in place */-->
+      <!--z-index: -1; /* Sit on top */-->
+      <!--left: 0px;-->
+      <!--bottom: -20px;-->
+      <!--width: 100%; /* Full width */-->
+      <!--height: 100%; /* Full height */-->
+      <!--overflow: auto; /* Enable scroll if needed */-->
+      <!--background-image: url('{% static "images/leket5.png" %}'); /* Set the background image */-->
+      <!--background-position: left bottom;-->
+      <!--background-size: 400px; /* Set the size of the background image */-->
+      <!--background-repeat: no-repeat; /* Prevent the image from repeating */-->
+      <!--opacity: 0.2; /* Change the opacity to 50% */-->
+<!--&lt;!&ndash;      background-image: url('{% static "images/leket4.png" %}'); /* Set the background image */&ndash;&gt;-->
+    <!--}-->
+<!--</style>-->
+<!--{% endblock %}-->
+{% load static %}
+
+    <style>
+body {
+        font-family: tahoma, Helvetica, sans-serif;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        position: relative; /* Make sure the parent element is relatively positioned */
+    }
+
+    body::after {
+        content: "";
+        background-image: url('{% static "images/without_tree_circle.png" %}'); /* Set the background image */
+        background-size: cover; /* sets the image to cover the entire body */
+        opacity: 0.68; /* Set the opacity of the background image */
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1; /* Place the pseudo-element behind other content */
+    }
+    .img {
+    float: left;
+    margin-right:-80px;
+    margin-top:-545px;
+
+}
+
+.img1 {
+    float: right;
+    margin-right:80px;
+
+}
+</style>
+<!--<b> This is the pred from previous page: </b> {{ location_pred }}-->
+<br>
+<br>
+<img src="data:image/png;base64,{{ location_image_base64 }}" alt="location_image_base64" class="img1">
+<img src="data:image/png;base64,{{ farmers_mean_image_base64 }}" alt="farmers_mean_image_base64" class="img">
+<img src="data:image/png;base64,{{ message_base64 }}" alt="message_base64" class="img1">
+<!--<img src="data:image/png;base64,{{ location_image_base64 }}" alt="farmer_table" class="img">-->
+
+

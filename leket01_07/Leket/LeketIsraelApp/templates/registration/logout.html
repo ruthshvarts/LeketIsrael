@@ -1,0 +1,22 @@
+<!--file added-->
+{% extends 'master.html' %}
+
+{% block content %}
+  <h1>Logged out!</h1>
+  <p>You have been successfully logged out. Thank you for using our site.</p>
+  <a href="{% url 'login' %}">Login again</a>
+{% endblock %}
+
+
+
+<!--{% block content %}-->
+  <!--<p>Logged out!</p>-->
+  <!--<a href="{% url 'logout'%}">Click here to login again!!!!.</a>-->
+<!--{% endblock %}-->
+
+<!--<h2>Log Out</h2>-->
+<!--<form method="post">-->
+    <!--{% csrf_token %}-->
+    <!--{{ form.as_p }}-->
+    <!--<button type="submit">Log out</button>-->
+<!--</form>-->
