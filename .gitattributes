@@ -1,1 +1,1 @@
-*.pkl filter=lfs diff=lfs merge=lfs -text
+leket01_07/Leket/random_forest_model_new.pkl filter=lfs diff=lfs merge=lfs -text
