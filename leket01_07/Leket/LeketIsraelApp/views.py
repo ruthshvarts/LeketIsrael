@@ -24,24 +24,11 @@ from . import project_leket_gradient_boosting, test
 @login_required
 @csrf_exempt #not reccomended by gpt - only for debug
 def LeketIsraelApp(request):
-    # template = loader.get_template('HomePage.html')
-    # return HttpResponse(template.render())
-    # if request.method == 'POST':
-    #     template = loader.get_template('HomePage.html')
-    #     return HttpResponse(template.render())
-    # else:
-    #     template = loader.get_template('main.html')
-    #     return HttpResponse(template.render())
     if request.method == 'POST':
-        # Redirect to a success page
-        # print("LeketIsraelApp - entered post")
-        # return redirect('home')
         return redirect('HomePage')
-        # return render(request, 'HomePage.html')
+
 
     else:
-        # Render the form page
-        # print("LeketIsraelApp - did not enter post")
         return render(request, 'main.html')
 
 def main(request):
@@ -78,27 +65,7 @@ def HomePage(request):
     all_records = leket_DB_new.objects.all()
     record_values = all_records.values()
     df = pd.DataFrame.from_records(record_values)
-    # q1 = """
-    #   SELECT
-    #     count (distinct missionID) as num_of_orders,
-    #     strftime('%Y', date) year,
-    #     strftime('%m', date) month,
-    #     strftime('%W', date) week,
-    #     area,
-    #     leket_location,
-    #     type,
-    #     napa_name,
-    #     aklim_area,
-    #     TMY_station,
-    #     station,
-    #     ground_temp,
-    #     shmita,
-    #     chagim,
-    #     sum(sum_amount_kg) as sum_amount_kg
-    #   FROM df
-    #   GROUP BY 2,3,4,5,6,7,8,9,10,11,12,13,14
-    # """
-    # df = ps.sqldf(q1, locals())
+
     q2 = """
       SELECT distinct type
       FROM df
@@ -119,18 +86,6 @@ def my_view(request):
     print(data)
     return render(request, 'results.html', {'data': data})
 
-
-# def signup(request):
-#     if request.method == "POST":
-#         form = ExtendedUserCreationForm(request.POST)
-#         if form.is_valid():
-#             user = form.save()
-#             messages.success(request, "New user created! Please sign in.")
-#             return redirect('main')
-#     else:
-#         form = ExtendedUserCreationForm()
-#
-#     return render(request, "registration/signup.html", {"form":form})
 
 def signup(request):
     if request.method == "POST":
@@ -167,14 +122,10 @@ def check1(request):
     results = project_leket_gradient_boosting.run()
     return render(request, 'check.html', {'results': results})
 
-# def check(request):
-#     shmita_year = request.GET.get('shmita-year')
-#     df = test.run(shmita_year)
-#
-#     return render(request, 'check.html', {'df': df})
+
 from urllib.parse import unquote
 import json
-# from .forms import LocationChoiceField
+
 def check_original(request):
     start_date = request.GET.get('start-date')
     end_date = request.GET.get('end-date')
@@ -219,39 +170,6 @@ def check_original(request):
                                           'leket_location_prediction':leket_location_prediction
                                           })
 
-# def check(request):
-#     if request.method == 'POST':
-#         shmita_year = request.POST.get('shmita-year')  # Retrieve value from POST data
-#         df = test.run(shmita_year)
-#         return render(request, 'check.html', {'df': df, 'shmita': shmita_year})
-#     else:
-#         return render(request, 'check.html')
-# def Station(request):
-#     options = LeketIsraelApp.objects.values_list('Station', flat=True).distinct()
-#     context = {'options': options}
-#     return render(request, 'HomePage.html', context)
-
-# from .forms import UserForm
-# def user_form(request):
-#     if request.method == 'POST':
-#         print("!!!!!!!!!!!!!!!!! Enter this function !!!!!!!!!!!!!!!!!")
-#         form = UserForm(request.POST)
-#         if form.is_valid():
-#             # Process the form data
-#             first_name = form.cleaned_data['first_name']
-#             last_name = form.cleaned_data['last_name']
-#             email = form.cleaned_data['email']
-#             age = form.cleaned_data['age']
-#             todays_date = form.cleaned_data['todays_date']
-#             # Perform further actions with the form data
-#
-#             # Render a success page or redirect to another URL
-#             return render(request, 'check.html')
-#     else:
-#         form = UserForm()
-#
-#     context = {'form': form}
-#     return render(request, 'check.html', context)
 
 def check(request):
     # start_date = request.GET.get('start-date')

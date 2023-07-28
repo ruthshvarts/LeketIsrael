@@ -39,15 +39,6 @@ class leket_DB(models.Model):
     farmerID = models.CharField(("farmerID"),max_length=100)
     date = models.DateField(("date"))
 
-# class Users(models.Model):
-#     username = models.CharField(max_length=50)
-#     password = models.CharField(max_length=50)
-#     email = models.EmailField(max_length=254, unique=True)
-#     def clean(self):
-#         if not validate_password(self.password):
-#             raise ValidationError('Password does not meet the requirements.')
-
-
 class leket_DB_new(models.Model):
     group = models.CharField("group", max_length=100, null=True)
     type = models.CharField(("type"), max_length=100)

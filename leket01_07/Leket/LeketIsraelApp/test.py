@@ -43,12 +43,7 @@ def create_napa_dict(df):
     result_dict.keys()
     return result_dict
 
-# def openfile(file,column, value):
-#     with open(file, newline='') as csvfile:
-#         data = list(csv.DictReader(csvfile))
-#     print("=========================================", data)
-#     val = data[data[column] == value]
-#     return val
+
 def openfile(file, column1,column2, value):
     df = pd.read_csv(file, encoding='utf-8-sig')
     if value not in df[column1].values: return -1
@@ -67,74 +62,26 @@ def load_model_from_pickle(filename):
 def run(end_date, location, chag, type,napa_name):
     loaded_model = load_model_from_pickle('random_forest_model_new.pkl')
 
-    #
-    # data1 = {'num_of_orders': [1],
-    #         'year': [2023],
-    #         'month': [1],
-    #         'week':[1],
-    #         'leket_location':[encoded_location],
-    #         'type':[encoded_type],
-    #         'shmita':[0],
-    #         'chagim':[0],
-    #         'type_count':[2810]}
-    # row = pd.DataFrame(data1)
-    # y_pred = loaded_model.predict(row)
-
-
     all_records = leket_DB_24_06.objects.all()
     # Retrieve the values from the queryset
     record_values = all_records.values()
     # Convert the values to a pandas DataFrame
     df = pd.DataFrame.from_records(record_values)
-    # df = df.head(10)
     df['date'] = pd.to_datetime(df['date'])
     df['year'] = df['date'].dt.year
     df['month'] = df['date'].dt.month
     df['week'] = df['date'].dt.isocalendar().week
     df['ground_temp'] = pd.to_numeric(df['ground_temp'], errors='coerce')
 
-    chag_val = (1 if chag == "כן" else 0)     # what do we do case its none?
-    # start_date1 = datetime.datetime.strptime(start_date, '%Y-%m-%d')
-    # start_year = start_date1.year
-    # start_month = start_date1.month
-    # start_week = start_date1.isocalendar()[1]
-
+    chag_val = (1 if chag == "כן" else 0)
     end_date1 = datetime.datetime.strptime(end_date, '%Y-%m-%d')
     end_year = end_date1.year
     end_month = end_date1.month
     end_week = end_date1.isocalendar()[1]
 
-
-
     # shmita year calculation is in a website i found, and gpt gave a way to calculate it
     shmita_val = (1 if ((end_year + 3760) % 7) == 0 else 0)
 
-    #
-    # q1 = """
-    # SELECT
-    #     count (distinct missionID) as num_of_orders,
-    #     year,
-    #     month,
-    #     week,
-    #     area,
-    #     leket_location,
-    #     type,
-    #     napa_name,
-    #     aklim_area,
-    #     TMY_station,
-    #     station,
-    #     ground_temp,
-    #     shmita,
-    #     chagim,
-    #     sum(sum_amount_kg) as sum_amount_kg
-    # FROM df
-    # # WHERE month between {0} AND {1}
-    # #       AND shmita = {2}
-    # #       AND chagim = {3}
-    # #       AND leket_location = '{4}'
-    # #       AND type = '{5}'
-    # GROUP BY 2,3,4,5,6,7,8,9,10,11,12,13,14
-    # """.format(start_month, end_month, shmita_val, chag_val, location, type)
 
     q1 = """
     SELECT
@@ -182,341 +129,7 @@ def run(end_date, location, chag, type,napa_name):
     leket_location_prediction['test_preds'] = test_preds.round()
     leket_location_prediction = leket_location_prediction.sort_values('test_preds', ascending=False)
 
-    # plt.figure(facecolor='none')
-    # grouped = df.groupby(['year', 'month'])['sum_amount_kg'].sum()
-    # reshaped = grouped.unstack(level='month')
-    # ax = reshaped.plot(kind='barh', stacked=True)
-    # ax.set_xlabel('Number of Orders')
-    # ax.set_ylabel('Year')
-    # ax.set_facecolor('none')
-    # legend = ax.legend(facecolor='none', title='שדוח')
-
-    # buffer = io.BytesIO()
-    # plt.savefig(buffer, format='png', facecolor='none')
-    # buffer.seek(0)
-    # image_base64 = base64.b64encode(buffer.read()).decode('utf-8')
-    # buffer.close()
     return (df, shmita_val, leket_location_prediction, leket_location_arr)
-
-# import sqlite3
-# import pandas as pd
-# import pandasql as ps
-# from LeketIsraelApp.models import leket_DB_new
-# from django.conf import settings
-# import datetime
-# import matplotlib.pyplot as plt
-# import io
-# import base64
-# import numpy
-# import pandas as pd
-# import dash
-# import dash_core_components as dcc
-# import dash_html_components as html
-# import plotly.express as px
-#
-# def run(start_date, end_date, location, chag):
-#     all_records = leket_DB_new.objects.all()
-#     # Retrieve the values from the queryset
-#     record_values = all_records.values()
-#     # Convert the values to a pandas DataFrame
-#     df = pd.DataFrame.from_records(record_values)
-#     df = df.head(10)
-#     df['date'] = pd.to_datetime(df['date'])
-#     df['year'] = df['date'].dt.year
-#     df['month'] = df['date'].dt.month
-#     df['week'] = df['date'].dt.week
-#     df['ground_temp'] = pd.to_numeric(df['ground_temp'], errors='coerce')
-#
-#     print(df.info())
-#
-#     chag_val = (1 if chag == "כן" else 0)     # what do we do case its none?
-#     start_date1 = datetime.datetime.strptime(start_date, '%Y-%m-%d')
-#     start_year = start_date1.year
-#     start_month = start_date1.month
-#
-#     end_date1 = datetime.datetime.strptime(end_date, '%Y-%m-%d')
-#     end_year = end_date1.year
-#     end_month = end_date1.month
-#
-#     # location_str = ', '.join(["'{}'".format(loc) for loc in location])
-#
-#     # shmita year calculation is in a website i found, and gpt gave a way to calculate it
-#     shmita_val = (1 if (start_year + 3760 % 7) == 0 else 0)
-#
-#     q1 = """
-#     SELECT
-#         count (distinct missionID) as num_of_orders,
-#         year,
-#         month,
-#         week,
-#         area,
-#         leket_location,
-#         type,
-#         napa_name,
-#         aklim_area,
-#         TMY_station,
-#         station,
-#         ground_temp,
-#         shmita,
-#         chagim,
-#         sum(sum_amount_kg) as sum_amount_kg
-#     FROM df
-#     WHERE month between {0} AND {1}
-#           AND shmita = {2}
-#           {3}
-#           {4}
-#     GROUP BY 2,3,4,5,6,7,8,9,10,11,12,13,14
-#     """.format(start_month, end_month, shmita_val, "AND chagim = '{}'".format(chag) if chag else "",
-#                "AND leket_location IN ({})".format(', '.join(["'{}'".format(loc) for loc in location])) if location else "")
-#     df = ps.sqldf(q1, locals())
-#
-#     # Create a Dash app
-#     app = dash.Dash(__name__)
-#
-#     # Define the layout
-#     app.layout = html.Div([
-#         html.H1('Interactive Plot'),
-#         html.Label('Select Location:'),
-#         dcc.Dropdown(
-#             id='location-dropdown',
-#             options=[
-#                 {'label': 'Location 1', 'value': 'Location 1'},
-#                 {'label': 'Location 2', 'value': 'Location 2'},
-#                 # Add more location options as needed
-#             ],
-#             value='Location 1'  # Set a default value
-#         ),
-#         dcc.Graph(id='plot')
-#     ])
-#
-#     # Define the callback function
-#     @app.callback(
-#         dash.dependencies.Output('plot', 'figure'),
-#         [dash.dependencies.Input('location-dropdown', 'value')]
-#     )
-#     def update_plot(location):
-#         # Filter the data based on the selected location
-#         filtered_df = df[df['leket_location'] == location]
-#
-#         # Group and aggregate the data
-#         grouped = filtered_df.groupby(['year', 'month'])['sum_amount_kg'].sum().reset_index()
-#
-#         # Create the plot using Plotly Express
-#         image_base64 = px.bar(grouped, x='year', y='sum_amount_kg', color='month', barmode='stack')
-#
-#         return (df, image_base64)
-#
-#
-#     # Run the app
-#     if __name__ == '__main__':
-#         app.run_server(debug=True)
-
-
-
-#
-# import sqlite3
-# import pandas as pd
-# import pandasql as ps
-# from LeketIsraelApp.models import leket_DB_new
-# from django.conf import settings
-# import datetime
-# import matplotlib.pyplot as plt
-# import io
-# import base64
-# import numpy
-#
-#
-# def run(start_date, end_date, location, chag, type):
-#     all_records = leket_DB_new.objects.all()
-#     # Retrieve the values from the queryset
-#     record_values = all_records.values()
-#     # Convert the values to a pandas DataFrame
-#     df = pd.DataFrame.from_records(record_values)
-#     # df = df.head(10)
-#     df['date'] = pd.to_datetime(df['date'])
-#     df['year'] = df['date'].dt.year
-#     df['month'] = df['date'].dt.month
-#     df['week'] = df['date'].dt.isocalendar().week
-#     df['ground_temp'] = pd.to_numeric(df['ground_temp'], errors='coerce')
-#
-#     chag_val = (1 if chag == "כן" else 0)     # what do we do case its none?
-#     start_date1 = datetime.datetime.strptime(start_date, '%Y-%m-%d')
-#     start_year = start_date1.year
-#     start_month = start_date1.month
-#
-#     end_date1 = datetime.datetime.strptime(end_date, '%Y-%m-%d')
-#     end_year = end_date1.year
-#     end_month = end_date1.month
-#
-#
-#     # shmita year calculation is in a website i found, and gpt gave a way to calculate it
-#     shmita_val = (1 if ((start_year + 3760) % 7) == 0 else 0)
-#
-#     q1 = """
-#     SELECT
-#         count (distinct missionID) as num_of_orders,
-#         year,
-#         month,
-#         week,
-#         area,
-#         leket_location,
-#         type,
-#         napa_name,
-#         aklim_area,
-#         TMY_station,
-#         station,
-#         ground_temp,
-#         shmita,
-#         chagim,
-#         sum(sum_amount_kg) as sum_amount_kg
-#     FROM df
-#     WHERE month between {0} AND {1}
-#           AND shmita = {2}
-#           AND chagim = {3}
-#           AND leket_location = '{4}'
-#           AND type = '{5}'
-#     GROUP BY 2,3,4,5,6,7,8,9,10,11,12,13,14
-#     """.format(start_month, end_month, shmita_val, chag_val, location, type)
-#     df = ps.sqldf(q1, locals())
-#     print(df)
-#     # "AND leket_location IN ({})".format(', '.join(["'{}'".format(loc) for loc in location])) if location else ""
-#     # print("lrn df", len(df))
-#     # if len(df) == 0:
-#     #     return ("No DATA", shmita_val)
-#     if df.empty:
-#         return (df, shmita_val)
-#
-#     grouped = df.groupby(['year', 'month'])['sum_amount_kg'].sum()
-#     reshaped = grouped.unstack(level='month')
-#     # plt.figure(facecolor='none')
-#     ax = reshaped.plot(kind='barh', stacked=True)  # Use 'barh' for horizontal bar plot
-#     ax.set_xlabel('Number of Orders')  # Set x-axis label to 'Number of Orders'
-#     ax.set_ylabel('Year')  # Set y-axis label to 'Year'
-#     ax.set_facecolor('none')
-#     legend = ax.legend(facecolor='none', title='שדוח')
-#
-#     buffer = io.BytesIO()
-#     plt.savefig(buffer, format='png', facecolor='none')  # Set facecolor to 'none'
-#     buffer.seek(0)
-#     image_base64 = base64.b64encode(buffer.read()).decode('utf-8')
-#     buffer.close()
-#     return (df, image_base64, shmita_val)
-#
-#
-# # import sqlite3
-# # import pandas as pd
-# # import pandasql as ps
-# # from LeketIsraelApp.models import leket_DB_new
-# # from django.conf import settings
-# # import datetime
-# # import matplotlib.pyplot as plt
-# # import io
-# # import base64
-# # import numpy
-# # import pandas as pd
-# # import dash
-# # import dash_core_components as dcc
-# # import dash_html_components as html
-# # import plotly.express as px
-# #
-# # def run(start_date, end_date, location, chag):
-# #     all_records = leket_DB_new.objects.all()
-# #     # Retrieve the values from the queryset
-# #     record_values = all_records.values()
-# #     # Convert the values to a pandas DataFrame
-# #     df = pd.DataFrame.from_records(record_values)
-# #     df = df.head(10)
-# #     df['date'] = pd.to_datetime(df['date'])
-# #     df['year'] = df['date'].dt.year
-# #     df['month'] = df['date'].dt.month
-# #     df['week'] = df['date'].dt.week
-# #     df['ground_temp'] = pd.to_numeric(df['ground_temp'], errors='coerce')
-# #
-# #     print(df.info())
-# #
-# #     chag_val = (1 if chag == "כן" else 0)     # what do we do case its none?
-# #     start_date1 = datetime.datetime.strptime(start_date, '%Y-%m-%d')
-# #     start_year = start_date1.year
-# #     start_month = start_date1.month
-# #
-# #     end_date1 = datetime.datetime.strptime(end_date, '%Y-%m-%d')
-# #     end_year = end_date1.year
-# #     end_month = end_date1.month
-# #
-# #     # location_str = ', '.join(["'{}'".format(loc) for loc in location])
-# #
-# #     # shmita year calculation is in a website i found, and gpt gave a way to calculate it
-# #     shmita_val = (1 if (start_year + 3760 % 7) == 0 else 0)
-# #
-# #     q1 = """
-# #     SELECT
-# #         count (distinct missionID) as num_of_orders,
-# #         year,
-# #         month,
-# #         week,
-# #         area,
-# #         leket_location,
-# #         type,
-# #         napa_name,
-# #         aklim_area,
-# #         TMY_station,
-# #         station,
-# #         ground_temp,
-# #         shmita,
-# #         chagim,
-# #         sum(sum_amount_kg) as sum_amount_kg
-# #     FROM df
-# #     WHERE month between {0} AND {1}
-# #           AND shmita = {2}
-# #           {3}
-# #           {4}
-# #     GROUP BY 2,3,4,5,6,7,8,9,10,11,12,13,14
-# #     """.format(start_month, end_month, shmita_val, "AND chagim = '{}'".format(chag) if chag else "",
-# #                "AND leket_location IN ({})".format(', '.join(["'{}'".format(loc) for loc in location])) if location else "")
-# #     df = ps.sqldf(q1, locals())
-# #
-# #     # Create a Dash app
-# #     app = dash.Dash(__name__)
-# #
-# #     # Define the layout
-# #     app.layout = html.Div([
-# #         html.H1('Interactive Plot'),
-# #         html.Label('Select Location:'),
-# #         dcc.Dropdown(
-# #             id='location-dropdown',
-# #             options=[
-# #                 {'label': 'Location 1', 'value': 'Location 1'},
-# #                 {'label': 'Location 2', 'value': 'Location 2'},
-# #                 # Add more location options as needed
-# #             ],
-# #             value='Location 1'  # Set a default value
-# #         ),
-# #         dcc.Graph(id='plot')
-# #     ])
-# #
-# #     # Define the callback function
-# #     @app.callback(
-# #         dash.dependencies.Output('plot', 'figure'),
-# #         [dash.dependencies.Input('location-dropdown', 'value')]
-# #     )
-# #     def update_plot(location):
-# #         # Filter the data based on the selected location
-# #         filtered_df = df[df['leket_location'] == location]
-# #
-# #         # Group and aggregate the data
-# #         grouped = filtered_df.groupby(['year', 'month'])['sum_amount_kg'].sum().reset_index()
-# #
-# #         # Create the plot using Plotly Express
-# #         image_base64 = px.bar(grouped, x='year', y='sum_amount_kg', color='month', barmode='stack')
-# #
-# #         return (df, image_base64)
-# #
-# #
-# #     # Run the app
-# #     if __name__ == '__main__':
-# #         app.run_server(debug=True)
-#
-
 
 def create_an_image(leket_location ,type ,chag, end_date, location_pred):
     all_records = leket_DB_24_06.objects.all()
@@ -543,14 +156,8 @@ def create_an_image(leket_location ,type ,chag, end_date, location_pred):
     df = ps.sqldf(q1, locals())
 
     if df.empty:
-        # # fig, ax = plt.subplots()
-        # buffer = io.BytesIO()
-        # buffer2 = io.BytesIO()
-        # plt.savefig(buffer, format='png')
-        # buffer.seek(0)
         location_image_base64 = "message"
         farmers_mean_image_base64 = "message"
-        # buffer.close()
 
         fig, ax = plt.subplots()
         ax.axis('off')
@@ -568,8 +175,6 @@ def create_an_image(leket_location ,type ,chag, end_date, location_pred):
         buffer.seek(0)
         message_base64 = base64.b64encode(buffer.read()).decode('utf-8')
         buffer.close()
-        # buffer2.close()
-        # message = "There is no historic data"
 
     else:
         message_base64 = 'There is data'
@@ -591,10 +196,6 @@ def create_an_image(leket_location ,type ,chag, end_date, location_pred):
         # Concatenate the new row DataFrame with the original DataFrame, preserving the index column
         grouped = pd.concat([grouped, new_row_df], ignore_index=True)
         grouped['amount_kg'] = pd.to_numeric(grouped['amount_kg'])
-        # grouped.set_index('year', inplace=True, drop=True)
-        # reshaped = grouped.unstack(level='month')
-        # color = '#f6a172'  # Choose your desired color
-        # ax = grouped.plot(kind='barh', x='year', y='amount_kg', color=color)
         # Define the colors for the bars
         color_existing = '#f6a172'  # Color for existing records
         color_new = '#7cb6e8'  # Color for the new record
@@ -628,8 +229,6 @@ def create_an_image(leket_location ,type ,chag, end_date, location_pred):
             ax.annotate(f'{width:.1f}', xy=(x + width / 2, y + height / 2),
                         xytext=(0, 0), textcoords='offset points',
                         ha='center', va='center')
-    # plt.show()
-    # legend = ax.legend(facecolor='none', title='שדוח')
 
         buffer = io.BytesIO()
         plt.savefig(buffer, format='png', facecolor='none')
@@ -672,8 +271,3 @@ def create_an_image(leket_location ,type ,chag, end_date, location_pred):
         buffer2.close()
 
     return location_image_base64, farmers_mean_image_base64, message_base64
-
-    # return location_image_base64
-
-
-
