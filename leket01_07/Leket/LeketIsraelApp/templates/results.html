@@ -1,102 +1,100 @@
-{% extends "master.html" %}
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>חיזוי קטיפת אוכל לקט</title>
+    <script data-require="jquery@2.0.3" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+    <script src="{% static 'script.js' %}"></script>
+    {% block extra_styles %}
 
-{% block title %}
-My Tennis Club - List of all members
-{% endblock %}
-
-
-{% block content %}
-
-
-<style>
-     p {
+    <style>
+    p {
     color: #F37835;
     font-weight: bold;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
     font-size: 38px;
     margin: 0 auto;
-    text-align: center;
-    display: table;
-    vertical-align: middle;
-
-  }
-    </style>
-<br><p >תוצאות חיזוי</p> <br><br>
-<style>
-    h3{
-    font-weight: normal;
-    text-align: right;
-    margin-top: -20px;
+    <!--text-align: right;-->
+    <!--display: table;-->
+    <!--display: inline-block; -->
     margin-right: 40px;
-    }
-    </style>
-<h3 dir="rtl">תוצאת האלגוריתם החיזוי עבור טווח התאריכים : {{ start_date}} עד {{ end_date}}</h3>
+    margin-left: 50%;
+  }
 
+  .background-image {
+      position: fixed;
+      z-index: -1;
+      left: 0px;
+      bottom: -20px;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-image: url('{% static "images/leket5.png" %}');
+      background-position: left bottom;
+      background-size: 400px;
+      background-repeat: no-repeat;
+      opacity: 0.2;
+  }
 
-
-<table class="result-table">
-    <thead>
-    <tr>
-        <th>type</th>
-        <th>north</th>
-        <th>center</th>
-        <th>south</th>
-        <th>total</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for row in data %}
-    <tr>
-        <td>{{ row.type }}</td>
-        <td>{{ row.north }}</td>
-        <td>{{ row.center }}</td>
-        <td>{{ row.south }}</td>
-        <td>{{ row.total }}</td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
-<br><br>
-
-<h3 dir="rtl"><b> ערכי הפרמטרים שהוזנו:</b> <br>שנת שמיטה - {{shmita_year}}, תנאי מזג אוויר - {{weather_conditions}}, כמות משקעים - {{amount_rain}},
-    מגפה - {{epidemic}}, מלחמה - {{war}}
-</h3>
-
-<a href="{% url 'HomePage' %}" class="button">חיזוי חדש</a>
-
-<style>
-body {
-        font-family: Arial, Helvetica, sans-serif;
+  body {
+        font-family: Tahoma, Helvetica, sans-serif;
         height: 100vh;
         margin: 0;
         padding: 0;
         background: linear-gradient(to bottom, #fff, #D1E6CF);
-}
-.result-table {
+  }
+
+  .result-table {
     border-collapse: collapse;
-    font-family: Arial, sans-serif;
+    font-family: Tahoma, sans-serif;
     font-size: 14px;
-    width: 80%;
-    border-left: 2px solid #000;
-    border-right: 2px solid #000;
-    border-top: 2px solid #000;
-    border-bottom: 2px solid #000;
-
+    width: 60%;
     margin: 0 auto;
-
-
-}.result-table th, .result-table td {
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+    background-color: rgba(245, 245, 245, 0.5);
+    border-radius: value;
+    margin-left: auto;
+    margin-right: 95px;
     border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-}
-.result-table th {
-    background-color: #f2f2f2;
-}
-.button {
+    border-radius: 10px;
+  }
+
+  .result-table th, .result-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+  }
+
+  .result-table th {
+      background-color: #F6A172;
+      box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+      border-radius: 10px 10px 0 0;
+  }
+
+  .result-table tbody tr:hover {
+        background-color: #FBDBC9;
+  }
+
+  .result-table th:first-child {
+      border-radius: 10px 0 0 0;
+  }
+
+  .result-table th:last-child {
+      border-radius: 0 10px 0 0;
+  }
+
+  .result-table td:first-child {
+    text-align: center;
+  }
+
+  .button {
           position: absolute;
-          top: 90%;
-          left: 50%;
+          top: 87.5%;
+          left: 21.5%;
           transform: translate(-50%, -50%);
           background-color: #F37835;
           color: white;
@@ -108,17 +106,138 @@ body {
           font-size: 18px;
           text-align: center;
           text-decoration: none; /* remove underline */
+  }
 
-        }
-</style>
+  h3{
+    font-family: Tahoma, Helvetica, sans-serif;
+    font-weight: normal;
+    text-align: right;
+    margin-top: -20px;
+    margin-right: 100px;
+    }
 
-<!--<ul>-->
-<!--    {% for x in mymembers %}-->
-<!--    <li><a href="details/{{ x.id }}">{{ x.firstname }} {{ x.lastname }}</a></li>-->
-<!--    {% endfor %}-->
-<!--</ul>-->
+.pagination {
+  display: inline-block;
+  margin-top: 10px;
+  margin-right: 150px;
+  <!--color: #F37835;-->
+}
+
+.pagination a {
+  color: black;
+  float: left;
+  padding: 5px 10px;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color .3s;
+  text-align: center;
+  font-size: 14px;
+  <!--color: #F37835;-->
+}
+
+.pagination a.active {
+  background-color: #F6A172;
+  color: white;
+  border-radius: 5px;
+}
+
+.table-filter {
+    border-radius: 5px;
+}
+
+.pagination a:hover:not(.active) {background-color: #FBDBC9;}
+
+.pagination a:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.pagination a:last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.container {
+  text-align: center;
+}
+
+
+  </style>
+    {% endblock %}
+</head>
+
+
+<body>
+    {% block content %}
+<br><p>תוצאות חיזוי</p> <br><br>
+<h3 dir="rtl">תוצאת אלגוריתם החיזוי עבור התאריך: <b>{{end_date}}</b></h3><br>
+
+<h3 dir="rtl">סוג תוצרת: <b>{{type}}</b>, אזור גיאוגרפי: <b>{{napa_name}}</b>, תקופת חגים: <b>{{chag}}</b>,
+    שנת שמיטה: <b>{{shmita_val}}</b>
+</h3>
+
+<div class="container">
+<table class="grid">
+
+  <thead>
+    <tr>
+      <td index = 2> כמות צפויה
+          <div class="filter"></div>
+      </td>
+      <td index = 1> מיקום
+          <div class="filter"></div>
+      </td>
+   </tr>
+ </thead>
+ <tbody>
+   {% for row in page_obj %}
+    <tr>
+      <td>{{ row.test_preds }}</td>
+        <td>
+            <a href="{% url 'show_image' leket_location=row.leket_location|urlencode type=type chag=chag end_date=end_date location_pred=row.test_preds %}" target="_blank">
+                {{ row.leket_location }}
+            </a></td>
+    </tr>
+   {% endfor %}
+ </tbody>
+</table>
+
+
+<div class="pagination">
+    {% if page_obj.has_previous %}
+        <a class="page-link" href="?start-date={{start_date}}&end-date={{end_date}}&type={{type}}&napa_name={{napa_name}}&chag={{chag}}&page={{ page_obj.previous_page_number }}">&laquo; הקודם</a>
+        {% if page_obj.number > 2 %}
+            <a class="page-link" href="?start-date={{start_date}}&end-date={{end_date}}&type={{type}}&napa_name={{napa_name}}&chag={{chag}}&page=1">1</a>
+            {% if page_obj.number > 3 %}
+    <a href="#">...</a>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+
+    {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+            <a class="page-link active" href="?start-date={{start_date}}&end-date={{end_date}}&type={{type}}&napa_name={{napa_name}}&chag={{chag}}&page={{ num }}">{{ num }}</a>
+        {% elif num > page_obj.number|add:'-2' and num < page_obj.number|add:'2' %}
+            <a class="page-link" href="?start-date={{start_date}}&end-date={{end_date}}&type={{type}}&napa_name={{napa_name}}&chag={{chag}}&page={{ num }}">{{ num }}</a>
+        {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+        {% if page_obj.number < page_obj.paginator.num_pages|add:'-2' %}
+    <a href="#">...</a>
+            <a href="?start-date={{start_date}}&end-date={{end_date}}&type={{type}}&napa_name={{napa_name}}&chag={{chag}}&page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+        {% elif page_obj.number < page_obj.paginator.num_pages|add:'-1' %}
+            <a href="?start-date={{start_date}}&end-date={{end_date}}&type={{type}}&napa_name={{napa_name}}&chag={{chag}}&page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+        {% endif %}
+
+        <a href="?start-date={{start_date}}&end-date={{end_date}}&type={{type}}&napa_name={{napa_name}}&chag={{chag}}&page={{ page_obj.next_page_number }}">הבא »</a>
+    {% endif %}
+</div>
+</div>
+
+
+<a href="{% url 'HomePage' %}" class="button">חיזוי חדש</a>
+<div class="background-image"></div>
+
 {% endblock %}
-
-
-
-
+</body>
+</html>

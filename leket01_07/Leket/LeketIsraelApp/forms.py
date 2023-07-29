@@ -53,23 +53,3 @@ class CustomSetPasswordForm(SetPasswordForm):
         self.fields['new_password1'].label = _("סיסמה חדשה")
         self.fields['new_password2'].label = _("אימות סיסמה חדשה")
         self.error_messages['password_mismatch'] = _("הסיסמאות אינן תואמות.")
-
-# from LeketIsraelApp.models import leket_DB_new
-#
-# column_values = leket_DB_new.objects.values_list('station', flat=True).distinct()
-# # Create the CHOICES tuple using the retrieved values
-# CHOICES = [(value,value) for value in column_values]
-
-# class UserForm(forms.Form):
-#     first_name= forms.CharField(max_length=100)
-#     last_name= forms.CharField(max_length=100)
-#     email= forms.EmailField()
-#     age= forms.IntegerField()
-#     todays_date= forms.IntegerField(label="What is today's date?", widget=forms.Select(choices=CHOICES))
-#
-# class LocationChoiceField(forms.Form):
-#     locations = forms.ModelChoiceField(
-#         queryset=leket_DB_new.objects.values_list("station", flat=True).distinct(),
-#         empty_label=None
-#     )
-

@@ -94,23 +94,14 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        # 'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
         'NAME': 'LeketIsraelApp.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        # 'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
         'NAME': 'LeketIsraelApp.password_validation.MinimumLengthValidator',
     },
 
-    # {
-    #     # 'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    #     'NAME': 'LeketIsraelApp.password_validation.CommonPasswordValidator',
-    # },
-
     {
-        # 'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
         'NAME': 'LeketIsraelApp.password_validation.NumericPasswordValidator',
-
     },
 ]
 
@@ -145,7 +136,7 @@ LOGIN_URL = 'login'
 
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
-EMAIL_HOST_USER = "shirleyeshto@gmail.com"
-EMAIL_HOST_PASSWORD = "zjnmatedixkbbzpq"
+EMAIL_HOST_USER = "shirleyeshto@gmail.com" #TODO: put admin mail
+EMAIL_HOST_PASSWORD = "zjnmatedixkbbzpq" #TODO: need to understand what to do here
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = "shirleyeshto@gmail.com"
+DEFAULT_FROM_EMAIL = "shirleyeshto@gmail.com" #TODO: put admin mail
