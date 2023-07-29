@@ -81,8 +81,3 @@ class UserAttributeSimilarityValidator(password_validation.UserAttributeSimilari
                         code='password_too_similar',
                         params={'verbose_name': verbose_name},
                     )
-
-
-
-
-

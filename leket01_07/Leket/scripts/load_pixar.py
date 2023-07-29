@@ -1,20 +1,16 @@
 
-from LeketIsraelApp.models import leket_DB_24_06
+from LeketIsraelApp.models import leket_DB
 import csv
 
 def run():
-    with open('leket_db_24_06.csv', encoding="cp1255") as file:
+    with open('leket_db_24_06.csv', encoding="cp1255") as file: # TODO: verify the encoding of the csv file
         reader = csv.reader(file)
         next(reader)  # Advance past the header
 
-        leket_DB_24_06.objects.all().delete()
+        leket_DB.objects.all().delete()
 
         for row in reader:
-            print(row)
-
-            # genre, _ = Genre.objects.get_or_create(name=row[-1])
-
-            leket_db_new = leket_DB_24_06(group=row[0],
+            leket_db_new = leket_DB(group=row[0],
                                         type=row[1],
                                         area=row[2],
                                         leket_location=row[3],

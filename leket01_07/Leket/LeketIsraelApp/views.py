@@ -1,34 +1,30 @@
 from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from django.shortcuts import render,redirect
-from django.views.decorators.csrf import csrf_exempt #not reccomended by gpt - only for debug
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .forms import ExtendedUserCreationForm, CustomPasswordResetForm
 from django.contrib.auth import authenticate, login,logout
-from .models import leket_DB_new
+from .models import leket_DB
 import pandasql as ps
 import pandas as pd
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.views.generic import ListView
-
-
-# from django.contrib.auth.forms import UserCreationForm,PasswordResetForm
 
 
 import csv
-from . import project_leket_gradient_boosting, test
+from . import algorithm_functions
 
 
 @login_required
-@csrf_exempt #not reccomended by gpt - only for debug
+@csrf_exempt
 def LeketIsraelApp(request):
     if request.method == 'POST':
+        # Redirect to a success page
         return redirect('HomePage')
-
-
     else:
+        # Render the form page
         return render(request, 'main.html')
 
 def main(request):
@@ -36,8 +32,6 @@ def main(request):
     return HttpResponse(template.render())
 
 def results(request):
-    # template = loader.get_template('results.html')
-    # return HttpResponse(template.render())
     start_date = request.GET.get('start-date')
     end_date = request.GET.get('end-date')
     shmita_year = request.GET.get('shmita-year')
@@ -60,9 +54,9 @@ def HomePage(request):
     template = loader.get_template('HomePage.html')
     if not request.user.is_authenticated:
         messages.add_message(request, messages.WARNING, 'Please login to access this page.')
-    locations = leket_DB_new.objects.values_list('leket_location', flat=True).distinct()
+    locations = leket_DB.objects.values_list('leket_location', flat=True).distinct()
 
-    all_records = leket_DB_new.objects.all()
+    all_records = leket_DB.objects.all()
     record_values = all_records.values()
     df = pd.DataFrame.from_records(record_values)
 
@@ -75,7 +69,7 @@ def HomePage(request):
     df1 = ps.sqldf(q2, locals())
     type = df1['type'].tolist()
 
-    napa_name = leket_DB_new.objects.values_list('napa_name', flat=True).distinct()
+    napa_name = leket_DB.objects.values_list('napa_name', flat=True).distinct()
 
     return render(request, 'HomePage.html', {'locations': locations, 'type':type, 'napa_name':napa_name})
 
@@ -92,7 +86,6 @@ def signup(request):
         form = ExtendedUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            # messages.success(request, "New user created! Please sign in.")
             return redirect('login')
     else:
         form = ExtendedUserCreationForm()
@@ -106,7 +99,7 @@ def custom_login(request):
         user = authenticate(username=username, password=password)
         if user is not None and User.objects.filter(username=username).exists() and user.check_password(password):
             login(request, user)
-            return LeketIsraelApp(request)  # change this line
+            return LeketIsraelApp(request)
 
         else:
             return render(request, 'registration/login.html', {'error': 'Invalid credentials'})
@@ -118,27 +111,20 @@ def custom_logout(request):
     return redirect('login')
 
 
-def check1(request):
-    results = project_leket_gradient_boosting.run()
-    return render(request, 'check.html', {'results': results})
-
-
 from urllib.parse import unquote
 import json
-
 def check_original(request):
     start_date = request.GET.get('start-date')
     end_date = request.GET.get('end-date')
-    # location = request.GET.getlist('location')
     location = request.GET.get('location')
     chag = request.GET.get('chag')
     type = request.GET.get('type')
     napa_name = request.GET.get('napa_name')
 
-    function = test.run(end_date,location,chag, type, napa_name)
+    function = algorithm_functions.run(end_date, location, chag, type, napa_name)
     if len(function[0]) == 0:
         shmita_val = ("כן" if function[1] == 1 else "לא")
-        return render(request, 'check.html', {'start_date': start_date,
+        return render(request, 'results.html', {'start_date': start_date,
                                               'end_date': end_date,
                                               'location':location,
                                               'chag':chag,
@@ -152,14 +138,7 @@ def check_original(request):
     leket_location_prediction = function[3]
     shmita_val = ("כן" if shmita_val == 1 else "לא")
 
-    # query_results = leket_DB_new.objects.all()
-    # location_list = LocationChoiceField()  # Instantiate the form
-    # context = {
-    #     'query_results': query_results,
-    #     'location_list': location_list,
-    # }
-    # print("--------------- print check of context: ------------------", context)
-    return render(request, 'check.html', {'df': df,
+    return render(request, 'results.html', {'df': df,
                                           'start_date':start_date,
                                           'end_date':end_date,
                                           'location': location,
@@ -171,19 +150,17 @@ def check_original(request):
                                           })
 
 
-def check(request):
-    # start_date = request.GET.get('start-date')
+def results(request):
     end_date = request.GET.get('end-date')
-    # location = request.GET.getlist('location')
     location = request.GET.get('location')
     chag = request.GET.get('chag')
     type = request.GET.get('type')
     napa_name = request.GET.get('napa_name')
 
-    function = test.run(end_date,location,chag, type, napa_name)
+    function = algorithm_functions.run(end_date, location, chag, type, napa_name)
     if len(function[0]) == 0:
         shmita_val = ("כן" if function[1] == 1 else "לא")
-        return render(request, 'check.html', {'end_date': end_date,
+        return render(request, 'results.html', {'end_date': end_date,
                                               'napa_name':napa_name,
                                               'chag':chag,
                                               'type':type,
@@ -191,21 +168,18 @@ def check(request):
                                               'shmita_val':shmita_val})
 
     df = function[0]
-    # image_base64 = function[1]
     shmita_val = function[1]
     leket_location_arr = function[3]
     leket_location_prediction = function[2]
     shmita_val = ("כן" if shmita_val == 1 else "לא")
 
-
-###################### NISUI ######################
     data_list = leket_location_prediction.to_dict('records')
     paginator = Paginator(data_list, 10)
     page = request.GET.get('page',1)
     page_obj = paginator.get_page(page)
     nums = [i for i in range(1,page_obj.paginator.num_pages+1)]
 
-    return render(request, 'check.html', {'df': df,
+    return render(request, 'results.html', {'df': df,
                                           'end_date':end_date,
                                           'napa_name': napa_name,
                                           'chag': chag,
@@ -218,17 +192,13 @@ def check(request):
                                           'leket_location_arr':leket_location_arr
                                           })
 
-
-
 from django.http import HttpResponse
 
 def show_image(request, leket_location, type, chag, end_date, location_pred):
     # Generate the image based on the image_id
     decoded_leket_location = unquote(leket_location)
-    location_image_base64, farmers_mean_image_base64, message_base64 = test.create_an_image(decoded_leket_location, type, chag, end_date,location_pred)
+    location_image_base64, farmers_mean_image_base64, message_base64 = algorithm_functions.create_an_image(decoded_leket_location, type, chag, end_date, location_pred)
     if message_base64 == 'There is data':
-    # response = HttpResponse(content_type="image/jpeg")
-    # image.save(response, "JPEG")
         return render(request, 'image_show.html', {'location_image_base64':location_image_base64, 'farmers_mean_image_base64':farmers_mean_image_base64})
     else:
         return render(request, 'image_show.html', {'message_base64':message_base64})
