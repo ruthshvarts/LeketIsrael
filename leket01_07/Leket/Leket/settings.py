@@ -81,11 +81,18 @@ WSGI_APPLICATION = 'Leket.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+import dj_database_url
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.parse('postgres://leketisraeldb_prod_user:k3INlQcS3ZS2zXnDFEq5NWXSRsoMEq5f@dpg-cj3q4s5iuie55pmngld0-a.ohio-postgres.render.com/leketisraeldb_prod')
 }
 
 
@@ -94,14 +101,23 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
+        # 'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
         'NAME': 'LeketIsraelApp.password_validation.UserAttributeSimilarityValidator',
     },
     {
+        # 'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
         'NAME': 'LeketIsraelApp.password_validation.MinimumLengthValidator',
     },
 
+    # {
+    #     # 'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    #     'NAME': 'LeketIsraelApp.password_validation.CommonPasswordValidator',
+    # },
+
     {
+        # 'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
         'NAME': 'LeketIsraelApp.password_validation.NumericPasswordValidator',
+
     },
 ]
 
@@ -136,7 +152,7 @@ LOGIN_URL = 'login'
 
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
-EMAIL_HOST_USER = "shirleyeshto@gmail.com" #TODO: put admin mail
-EMAIL_HOST_PASSWORD = "zjnmatedixkbbzpq" #TODO: need to understand what to do here
+EMAIL_HOST_USER = "shirleyeshto@gmail.com"
+EMAIL_HOST_PASSWORD = "zjnmatedixkbbzpq"
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = "shirleyeshto@gmail.com" #TODO: put admin mail
+DEFAULT_FROM_EMAIL = "shirleyeshto@gmail.com"
