@@ -1,6 +1,6 @@
 {% load static %}
 
-    <style>
+<style>
 body {
         font-family: tahoma, Helvetica, sans-serif;
         height: 100vh;
@@ -23,12 +23,18 @@ body {
     }
     .img {
     float: left;
-    margin-right:-80px;
-    margin-top:-545px;
+    margin-right:-50px;
+    margin-top:-70px;
 
 }
 
 .img1 {
+    float: right;
+    margin-right:80px;
+
+}
+
+.img2 {
     float: right;
     margin-right:80px;
 
@@ -38,7 +44,4 @@ body {
 <br>
 <img src="data:image/png;base64,{{ location_image_base64 }}" alt="location_image_base64" class="img1">
 <img src="data:image/png;base64,{{ farmers_mean_image_base64 }}" alt="farmers_mean_image_base64" class="img">
-<img src="data:image/png;base64,{{ message_base64 }}" alt="message_base64" class="img1">
-
-
-
+<img src="data:image/png;base64,{{ message_base64 }}" alt="message_base64" class="img2">

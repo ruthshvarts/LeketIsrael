@@ -62,8 +62,7 @@ def load_model_from_pickle(filename):
 
 
 def run(end_date, location, chag, type,napa_name):
-    # loaded_model = load_model_from_pickle('random_forest_model.pkl')
-    loaded_model = load_model_from_pickle('random_forest_model_new.pkl')
+    loaded_model = load_model_from_pickle('random_forest_model.pkl')
 
     all_records = leket_DB.objects.all()
     # Retrieve the values from the queryset
@@ -127,9 +126,7 @@ def run(end_date, location, chag, type,napa_name):
         leket_location_arr.append(i)
 
         test.append([1,end_year,end_month,end_week,encoded_area,encoded_location,encoded_type,shmita_val,chag_val])
-    # test_df = pd.DataFrame(test, columns=['num_of_orders', 'year', 'month','week','area','leket_location',
-    #                                       'type','shmita','chagim'])
-    test_df = pd.DataFrame(test, columns=['num_of_orders', 'year', 'month','week','leket_location',
+    test_df = pd.DataFrame(test, columns=['num_of_orders', 'year', 'month','week','area','leket_location',
                                           'type','shmita','chagim'])
     test_preds = loaded_model.predict(test_df)
 
