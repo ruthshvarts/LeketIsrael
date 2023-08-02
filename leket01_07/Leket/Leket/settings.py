@@ -27,7 +27,7 @@ AUTHENTICATION_BACKENDS = [    'django.contrib.auth.backends.ModelBackend',]
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -87,6 +87,11 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# import dj_database_url
+# DATABASES = {
+#     'default': dj_database_url.parse('postgres://leketisraeldb_prod_user')
+# }
 
 
 # Password validation
