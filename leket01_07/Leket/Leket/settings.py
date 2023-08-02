@@ -90,7 +90,7 @@ DATABASES = {
 
 # import dj_database_url
 # DATABASES = {
-#     'default': dj_database_url.parse('postgres://leketisraeldb_prod_user:k3INlQcS3ZS2zXnDFEq5NWXSRsoMEq5f@dpg-cj3q4s5iuie55pmngld0-a.ohio-postgres.render.com/leketisraeldb_prod')
+#     'default': dj_database_url.parse('postgres://leketisraeldb_prod_user')
 # }
 
 
