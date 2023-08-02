@@ -101,6 +101,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'LeketIsraelApp.password_validation.UserAttributeSimilarityValidator',
     },
+
     {
         'NAME': 'LeketIsraelApp.password_validation.MinimumLengthValidator',
     },
@@ -126,7 +127,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-# STATIC_URL = 'static/'
 STATIC_URL = 'Leket/LeketIsraelApp/static/'
 
 # Default primary key field type
@@ -136,12 +136,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = "/"
 LOGIN_URL = 'login'
 
-# APPEND_SLASH = False
-# STATIC_URL = '/static/'
-
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
-EMAIL_HOST_USER = "shirleyeshto@gmail.com" #TODO: put admin mail
-EMAIL_HOST_PASSWORD = "zjnmatedixkbbzpq" #TODO: need to understand what to do here
+EMAIL_HOST_USER = "shirleyeshto@gmail.com"
+EMAIL_HOST_PASSWORD = "zjnmatedixkbbzpq"
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = "shirleyeshto@gmail.com" #TODO: put admin mail
+DEFAULT_FROM_EMAIL = "shirleyeshto@gmail.com"
