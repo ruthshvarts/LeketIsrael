@@ -136,9 +136,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = "/"
 LOGIN_URL = 'login'
 
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587
-EMAIL_HOST_USER = "shirleyeshto@gmail.com"
-EMAIL_HOST_PASSWORD = "zjnmatedixkbbzpq"
+EMAIL_HOST = "smtp.gmail.com"                     # Your SMTP server host
+EMAIL_PORT = 587                                  # The SMTP port
+EMAIL_HOST_USER = "username@gmail.com"            # The username for the SMTP server
+EMAIL_HOST_PASSWORD = "password"                  # The password for the SMTP server
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = "shirleyeshto@gmail.com"
+DEFAULT_FROM_EMAIL = "sender_username@gmail.com"  # The sender’s address from which the user will receive email
